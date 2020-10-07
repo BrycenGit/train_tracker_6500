@@ -37,5 +37,13 @@ describe '#Train' do
     end
   end
 
+  describe('#update') do
+    it("updates a train at attribute") do
+      train = Train.new({:color => "Blue", :id => nil})
+      train.save()
+      train.update({:color => "Red"})
+      expect(train.color).to(eq("Red"))
+    end
+  end
 
 end
