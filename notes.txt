@@ -1,0 +1,4 @@
+Day Pass = Ride any train anywhere (daily)
+Color Pass = Ride to any destination on the corresponding color train (daily)
+Destination Ticket = Includes one-way fair for a planned trip (single trip)
+Round Trip Ticket = includes return service for a planned trip. (single trip)
