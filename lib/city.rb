@@ -49,9 +49,14 @@ attr_reader :id
       DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{@id};")
     elsif (attributes.has_key?(:train_name)) && (attributes.fetch(:train_name) != nil)
       train_name = attributes.fetch(:train_name)
+      stop_time = attributes.fetch(:stop_time)
       train = DB.exec("SELECT * FROM trains WHERE lower(name)='#{train_name.downcase}';").first
       if train != nil
-        DB.exec("INSERT INTO trains_cities (train_id, city_id) VALUES (#{train['id'].to_i}, #{@id});")
+        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{train['id'].to_i}, #{@id}, #{stop_time});")
+      else
+        train = Train.new({:color => param, :id => nil})
+        train.save
+        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{train['id'].to_i}, #{@id}, #{stop_name});")
       end
     end
 
@@ -59,9 +64,10 @@ attr_reader :id
 
   def trains
     trains = []
-    results = DB.exec("SELECT train_id FROM trains_cities WHERE city_id = #{@id};")
+    results = DB.exec("SELECT train_id, stop_time FROM trains_cities WHERE city_id = #{@id};")
     results.each() do |result|
       train_id = result.fetch("train_id").to_i()
+      stop_time = result.fetch("stop_time")
       train = DB.exec("SELECT * FROM trains WHERE id = #{train_id};")
       name = train.first().fetch("name")
       trains.push(train.new({:name => name, :id => train_id}))

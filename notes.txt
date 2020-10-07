@@ -2,3 +2,24 @@ Day Pass = Ride any train anywhere (daily)
 Color Pass = Ride to any destination on the corresponding color train (daily)
 Destination Ticket = Includes one-way fair for a planned trip (single trip)
 Round Trip Ticket = includes return service for a planned trip. (single trip)
+
+Brian Harvey <brian.harv3y@gmail.com>
+
+
+
+  ####################################################################
+  {:color => "red"}
+  {:city_name => "austin"}
+
+  <form action="/artists/<%= @artist.id%>" method="post">
+  <div class="form-group">
+    <label for="artist_name">Album Name</label>
+    <input id="album_name" name="city_name" class="form-control" type="text">
+    
+  </div>
+  <button type="submit" class="btn btn-success">Enter album</button>
+</form>
+
+
+  
+#################################################################
