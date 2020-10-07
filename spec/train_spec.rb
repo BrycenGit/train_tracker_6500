@@ -29,5 +29,13 @@ describe '#Train' do
     end
   end
 
+  describe('#==') do
+    it("is the same train if it has the same attributes as another train") do
+      train = Train.new({:color => "Blue", :id => nil})
+      train2 = Train.new({:color => "Blue", :id => nil})
+      expect(train).to(eq(train2))
+    end
+  end
+
 
 end
