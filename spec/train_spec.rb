@@ -46,4 +46,23 @@ describe '#Train' do
     end
   end
 
+  describe('#delete') do
+    it('deletes a train') do
+      train = Train.new({:color => "Blue", :id => nil})
+      train.save()
+      train2 = Train.new({:color => "Blue", :id => nil})
+      train2.save()
+      train.delete
+      expect(Train.all).to(eq([train2]))
+    end
+  end
+
+  describe('#cities') do
+    it("see all cities a train stops at") do
+      train = Train.new({:color => "Blue", :id => nil})
+      train.save()
+      train.update({:city_name => "austin", :stop_time => Time.now})
+      expect(train.cities[0].name).to(eq('austin'))
+    end
+  end
 end

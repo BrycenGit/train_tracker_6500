@@ -47,32 +47,31 @@ attr_reader :id
     if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
       @name = attributes.fetch(:name)
       DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{@id};")
-    elsif (attributes.has_key?(:train_name)) && (attributes.fetch(:train_name) != nil)
-      train_name = attributes.fetch(:train_name)
+    elsif (attributes.has_key?(:color)) && (attributes.fetch(:color) != nil)
+      train_color = attributes.fetch(:color)
       stop_time = attributes.fetch(:stop_time)
-      train = DB.exec("SELECT * FROM trains WHERE lower(name)='#{train_name.downcase}';").first
+      train = DB.exec("SELECT * FROM trains WHERE lower(color)='#{train_color.downcase}';").first
       if train != nil
-        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{train['id'].to_i}, #{@id}, #{stop_time});")
+        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{train['id'].to_i}, #{@id}, '#{stop_time}');")
       else
-        train = Train.new({:color => param, :id => nil})
-        train.save
-        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{train['id'].to_i}, #{@id}, #{stop_name});")
+        new_train = Train.new({:color => train_color, :id => nil})
+        new_train.save
+        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{new_train.id}, #{@id}, '#{stop_time}');")
       end
     end
 
   end
 
   def trains
-    trains = []
+    trains = {}
     results = DB.exec("SELECT train_id, stop_time FROM trains_cities WHERE city_id = #{@id};")
     results.each() do |result|
       train_id = result.fetch("train_id").to_i()
       stop_time = result.fetch("stop_time")
       train = DB.exec("SELECT * FROM trains WHERE id = #{train_id};")
-      name = train.first().fetch("name")
-      trains.push(train.new({:name => name, :id => train_id}))
+      color = train.first().fetch("color")
+      trains[stop_time] = Train.new({:color => color, :id => train_id})
     end
-    trains
+    trains.values
   end
-
 end

@@ -56,11 +56,11 @@ class Train
       stop_time = attributes.fetch(:stop_time)
       city = DB.exec("SELECT * FROM cities WHERE lower(name) ='#{city_name.downcase}';").first
       if city != nil
-        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{train['id'].to_i}, #{@id}, #{stop_time});") # if city is there, do this!
+        DB.exec("INSERT INTO trains_cities (city_id, train_id, stop_time) VALUES (#{city['id'].to_i}, #{@id}, '#{stop_time}');") # if city is there, do this!
       else
-        city = City.new({:name => city_name, :id => nil}) # if city IS NOT there make new instance
-        city.save
-        DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{train['id'].to_i}, #{@id}, #{stop_time});")
+        new_city = City.new({:name => city_name, :id => nil}) # if city IS NOT there make new instance
+        new_city.save
+        DB.exec("INSERT INTO trains_cities (city_id, train_id, stop_time) VALUES (#{new_city.id}, #{@id}, '#{stop_time}');")
       end
     end
   end
