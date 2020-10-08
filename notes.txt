@@ -60,3 +60,31 @@ end
 
   
 #################################################################
+
+Travis Scott8:24 AM
+spec_helper:
+ENV['ENVIRONMENT'] = 'test'
+
+if (ENV['ENVIRONMENT'] == 'test')
+  DB = PG.connect({:dbname => 'ruby_records_test'})
+end
+app.rb:
+if (ENV['ENVIRONMENT'] != 'test')
+  DB = PG.connect({:dbname => "ruby_records"})
+end
+Travis Scott8:25 AM
+check db:
+puts DB.db
+
+
+#get ('/login') do
+  # if session[:admin] = true && params[:password] == 'admin'
+      #redirect to('/trains') -- or whatever we want
+    #elsif session[:user] = true
+      #redirect to('/tickets') -- or whatever UI should be
+    #else
+      #redirect to or prompt signup and/or only grant access to city view.
+#end
+
+train = Train.new({:color => :id => nil})
+vistit("/trains/#{train.id}")

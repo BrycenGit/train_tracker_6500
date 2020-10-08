@@ -1,0 +1,28 @@
+<h2>Train info</h2>
+
+
+<% if @info.any? %>
+<table class="table table-striped"> 
+  <thead>
+    <tr>
+      <th scope="col">City</div>
+      <th scope="col">Train</div>
+      <th scope="col">Time</div>
+    </tr>
+  </thead>
+  <tbody>
+  <% @info.each do |array| %>
+    <tr>
+      <td><%= array[0] %></td>
+      <td><%= array[1] %></td>
+      <td><%= array[2] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% else %>
+<p>No current routes</p>
+<% end %>
+<hr>
+
+<br><a href="/tickets" class="btn btn-danger">Buy Tickets</a>

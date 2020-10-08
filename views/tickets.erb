@@ -1,0 +1,47 @@
+<h2>Tickets</h2>
+<!-- Shows ticket types
+Show/link to cities and routes/trains
+Link Trip planner?
+
+
+
+Option to select type and purchase 
+Option to signup or login
+-->
+<% if @info.any? %>
+<form action="/tickets" method="post">
+  <div class="form-group">
+    <label for="tickets">Select Train:</label>
+    <select name="train_select" id="train_select">
+      
+      <%@info.each() do |array| %>
+        <option value="<%= array[1].train_name %>"></option>
+    </div>    
+<% end %>
+
+  <div class="form-group">
+    <label for="tickets">Select Ticket:</label>
+
+    <select name="ticket_type" id="ticket_type">
+      <option value="Day Pass -- 24 hr"></option>
+      <option value="Weekend Pass -- 48 hr Sat/Sun Only"></option>
+      <option value="Week Pass -- 7 day"></option>
+      <option value="Month Pass -- 30 day"></option>
+      <option value="Annual Pass -- 1 year"></option>
+      <option value="Single Destination -- One-Way"></option>
+      <option value="Single Destination -- Round Trip"></option>
+    </select>  
+
+  </div>
+  <button type="submit" class="btn btn-primary">Purchase</button>  
+</form>  
+  <% else %>  
+    <br>
+    <p> There are currently not trains available </p>>
+  
+<% end %>    
+
+
+
+
+<a href="/info" class="btn btn-info">More Info</a>

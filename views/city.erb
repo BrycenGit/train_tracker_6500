@@ -13,23 +13,19 @@
   <% end %>   
 
 <br><br>
-
 <form action="/cities/<%= @city.id %>" method="post">
   <div class="form-group">
     <label for="color">Enter train color</label>
-    <input id="color" name="train_color" class="form-control" type="text">
+    <input id="color" name="train_color" class="form-control" type="text" required>
     <label for="time">Enter train time</label>
-    <input id="time" name="train_time" class="form-control" type="datetime-local">
-    
+    <input id="time" name="train_time" class="form-control" type="datetime-local" required>
   </div>
   <button type="submit" class="btn btn-success">Add train</button>
 </form><br>
 
 <form action="/cities/<%= @city.id() %>" method="post">
   <input name="_method" type="hidden" value="delete">
-
   <button type="submit">Delete city</button>
 </form><br>
-
 
 <a href="/cities" class="btn btn-info">Back to cities</a>

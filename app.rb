@@ -6,9 +6,12 @@ require('./lib/train')
 require('pry')
 require("pg")
 require('dotenv/load')
+require('sinatra/base')
 also_reload('lib/**/*.rb')
 
+
 DB = PG.connect({:dbname => "train_system", :password => ENV['PG_PASS']})
+
 
 get('/') do
   redirect to('/trains')
@@ -90,4 +93,14 @@ delete('/cities/:id') do
   @city = City.find(params[:id].to_i)
   @city.delete
   redirect to('/cities')
+end
+
+get('/tickets') do
+  @info = Train.info
+  erb(:tickets)
+end
+
+get('/info') do
+  @info = Train.info
+  erb(:info)
 end

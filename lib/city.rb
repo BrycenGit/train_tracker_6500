@@ -47,6 +47,7 @@ attr_reader :id
     if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
       @name = attributes.fetch(:name)
       DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{@id};")
+
     elsif (attributes.has_key?(:color)) && (attributes.fetch(:color) != nil)
       train_color = attributes.fetch(:color)
       stop_time = attributes.fetch(:stop_time)

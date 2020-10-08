@@ -83,4 +83,25 @@ class Train
     end
     cities
   end
+
+  def self.info # 0=city name 1=train, 2=time
+    info = [] # houses multiple arrays -- each with train stop info
+    results = DB.exec("SELECT train_id, city_id, stop_time FROM trains_cities;")
+    results.each() do |result|
+      train_id = result.fetch("train_id").to_i()
+      city_id = result.fetch("city_id").to_i()
+      stop_time = result.fetch("stop_time")
+      city = DB.exec("SELECT * FROM cities WHERE id = #{city_id};")
+      train = DB.exec("SELECT * FROM trains WHERE id = #{train_id};")
+      city_name = city.first().fetch("name")
+      train_name = train.first().fetch("color")
+      array = [city_name, train_name, stop_time]
+      if info.include?(array)
+      else
+        info << array
+      end
+    end
+    info
+  end
 end
+
