@@ -4,8 +4,8 @@
 <br><br>
   <% if @train.cities.any? %>
     <ul>
-      <% @train.cities.each do |city| %>
-      <li><a href="/cities/<%= city.id %>"><%= city.name %></a></li>
+      <% @train.cities.each do |array| %> 
+      <li><a href="/cities/<%= array[0].id %>"><%= array[0].name %> at <%= array[1] %></a></li>
     <% end %>
     </ul>
   <% else %>

@@ -63,15 +63,19 @@ attr_reader :id
   end
 
   def trains
-    trains = {}
+    trains = []
     results = DB.exec("SELECT train_id, stop_time FROM trains_cities WHERE city_id = #{@id};")
     results.each() do |result|
       train_id = result.fetch("train_id").to_i()
       stop_time = result.fetch("stop_time")
       train = DB.exec("SELECT * FROM trains WHERE id = #{train_id};")
       color = train.first().fetch("color")
-      trains[stop_time] = Train.new({:color => color, :id => train_id})
+      array = [Train.new({:color => color, :id => train_id}), stop_time]
+      if trains.include?(array)
+      else
+        trains << array
+      end
     end
-    trains.values
+    trains
   end
 end

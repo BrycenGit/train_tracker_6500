@@ -60,9 +60,14 @@ describe '#Train' do
   describe('#cities') do
     it("see all cities a train stops at") do
       train = Train.new({:color => "Blue", :id => nil})
+      train2 = Train.new({:color => "Blue", :id => nil})
       train.save()
+      train2.save()
       train.update({:city_name => "austin", :stop_time => Time.now})
-      expect(train.cities[0].name).to(eq('austin'))
+      train.update({:city_name => "austin", :stop_time => Time.now})
+      train.update({:city_name => "portland", :stop_time => Time.now})
+
+      expect(train.cities).to(eq('austin'))
     end
   end
 end

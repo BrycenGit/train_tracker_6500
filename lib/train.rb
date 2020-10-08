@@ -57,25 +57,30 @@ class Train
       city = DB.exec("SELECT * FROM cities WHERE lower(name) ='#{city_name.downcase}';").first
       if city != nil
         DB.exec("INSERT INTO trains_cities (city_id, train_id, stop_time) VALUES (#{city['id'].to_i}, #{@id}, '#{stop_time}');") # if city is there, do this!
+
       else
         new_city = City.new({:name => city_name, :id => nil}) # if city IS NOT there make new instance
         new_city.save
         DB.exec("INSERT INTO trains_cities (city_id, train_id, stop_time) VALUES (#{new_city.id}, #{@id}, '#{stop_time}');")
+
       end
     end
   end
 
   def cities
-    cities = {}
+    cities = []
     results = DB.exec("SELECT city_id, stop_time FROM trains_cities WHERE train_id = #{@id};")
     results.each() do |result|
       city_id = result.fetch("city_id").to_i()
       stop_time = result.fetch("stop_time")
       city = DB.exec("SELECT * FROM cities WHERE id = #{city_id};")
       name = city.first().fetch("name")
-      cities[stop_time] = City.new({:name => name, :id => city_id})
+      array = [City.new({:name => name, :id => city_id}), stop_time]
+      if cities.include?(array)
+      else
+        cities << array
+      end
     end
-    cities.values  
+    cities
   end
-
 end
