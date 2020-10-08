@@ -104,4 +104,3 @@ class Train
     info
   end
 end
-

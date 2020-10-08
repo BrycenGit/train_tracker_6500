@@ -1,0 +1,36 @@
+<h2>Hello heres yo ticket</h2>
+
+<h2>Your tickets</h2>
+
+<% if @info.any? %>
+<table class="table table-striped"> 
+  <thead>
+    <tr>
+      <th scope="col">#</div>
+      <th scope="col">Ticket</div>
+      <th scope="col">Price</div>
+    </tr>
+  </thead>
+  <tbody>
+  <% @info.each do |hash| %>
+    <tr>
+      <td>
+      <form action="/purchased/<%= hash[:id] %>" method="post">
+
+        <input name="_method" type="hidden" value="delete">
+        
+        <button type="submit" class="btn btn-light"><%= hash[:id] %></button>
+      </form>
+      </td>
+      <td><%= hash[:ticket_type] %></td>
+      <td>$<%= hash[:ticket_price] %>.00</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% else %>
+<p>You have no tickets</p>
+<% end %>
+<hr>
+
+<a href="/tickets" class="btn btn-info">Back To Tickets</a>

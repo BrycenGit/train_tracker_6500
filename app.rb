@@ -3,6 +3,7 @@ require('sinatra')
 require('sinatra/reloader')
 require('./lib/city')
 require('./lib/train')
+require('./lib/ticket')
 require('pry')
 require("pg")
 require('dotenv/load')
@@ -14,8 +15,13 @@ DB = PG.connect({:dbname => "train_system", :password => ENV['PG_PASS']})
 
 
 get('/') do
-  redirect to('/trains')
+  redirect to('/login')
 end  
+
+get('/login') do
+  erb(:login)
+end
+
 
 get('/trains') do
   @trains = Train.all
@@ -99,6 +105,31 @@ get('/tickets') do
   @info = Train.info
   erb(:tickets)
 end
+
+delete('/purchased/:id') do
+  ticket = Ticket.find(params[:id].to_i())
+  ticket.delete
+  @info = Ticket.info
+  redirect to('/purchased')
+end 
+
+post('/purchased') do
+  train = params[:train_select]
+  ticket = params[:ticket_type]
+  new_ticket = Ticket.new({:type => ticket, :price => nil, :id => nil})
+  new_ticket.ticket_price
+  new_ticket.save({:train => train})
+  @info = Ticket.info
+  erb(:purchased)
+end
+
+get('/purchased') do
+  @info = Ticket.info
+  erb(:purchased)
+end
+
+
+
 
 get('/info') do
   @info = Train.info

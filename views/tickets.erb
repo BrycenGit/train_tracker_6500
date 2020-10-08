@@ -9,39 +9,43 @@ Option to select type and purchase
 Option to signup or login
 -->
 <% if @info.any? %>
-<form action="/tickets" method="post">
+<form action="/purchased" method="post">
   <div class="form-group">
-    <label for="tickets">Select Train:</label>
+    <label for="train">Select Train:</label>
     <select name="train_select" id="train_select">
       
-      <%@info.each() do |array| %>
-        <option value="<%= array[1].train_name %>"></option>
-    </div>    
-<% end %>
+      <%@info.each do |array| %>
+        <option value="<%= array[1]%>"><%= array[1]%> Line at <%= array[0]%></option>
+        
+      <% end %>
+    </select>
+  </div>
+
 
   <div class="form-group">
     <label for="tickets">Select Ticket:</label>
-
     <select name="ticket_type" id="ticket_type">
-      <option value="Day Pass -- 24 hr"></option>
-      <option value="Weekend Pass -- 48 hr Sat/Sun Only"></option>
-      <option value="Week Pass -- 7 day"></option>
-      <option value="Month Pass -- 30 day"></option>
-      <option value="Annual Pass -- 1 year"></option>
-      <option value="Single Destination -- One-Way"></option>
-      <option value="Single Destination -- Round Trip"></option>
+      <option value="Day Pass">Day Pass -- 24 hr</option>
+      <option value="Weekend Pass">Weekend Pass -- 48 hr Sat/Sun Only</option>
+      <option value="Week Pass">Week Pass -- 7 day</option>
+      <option value="Month Pass">Month Pass -- 30 day</option>
+      <option value="Annual Pass">Annual Pass -- 1 year</option>
+      <option value="One-Way">Single Destination -- One-Way</option>
+      <option value="Round Trip">Single Destination -- Round Trip</option>
     </select>  
+    
 
   </div>
   <button type="submit" class="btn btn-primary">Purchase</button>  
 </form>  
-  <% else %>  
+<% else %>  
     <br>
-    <p> There are currently not trains available </p>>
-  
+    <p> There are currently not trains available </p>
 <% end %>    
+<br>
 
 
 
-
-<a href="/info" class="btn btn-info">More Info</a>
+<a href="/info" class="btn btn-info">More Info</a><br>
+<br><a href="/purchased" class="btn btn-danger">Ticket History</a><br>
+<br><a href="/login" class="btn btn-dark">Logout<a>
