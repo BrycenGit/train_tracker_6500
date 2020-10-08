@@ -1,0 +1,35 @@
+<h2><%= @city.name %></h2>
+<br><br>
+<h3> Trains </h3>
+<br><br>
+  <% if @city.trains.any? %>
+    <ul>
+      <% @city.trains.each do |train| %>
+      <li><a href="/trains/<%= train.id %>"><%= train.color %></a></li>
+    <% end %>
+    </ul>
+  <% else %>
+    <p> This city does not have any current trains. </p>  
+  <% end %>   
+
+<br><br>
+
+<form action="/cities/<%= @city.id %>" method="post">
+  <div class="form-group">
+    <label for="color">Enter train color</label>
+    <input id="color" name="train_color" class="form-control" type="text">
+    <label for="time">Enter train time</label>
+    <input id="time" name="train_time" class="form-control" type="datetime-local">
+    
+  </div>
+  <button type="submit" class="btn btn-success">Add train</button>
+</form><br>
+
+<form action="/cities/<%= @city.id() %>" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete city</button>
+</form><br>
+
+
+<a href="/cities" class="btn btn-info">Back to cities</a>

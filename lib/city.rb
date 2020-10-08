@@ -22,7 +22,7 @@ attr_reader :id
     DB.exec("DELETE FROM cities *;")
   end
 
-  def self.find
+  def self.find(id)
     city = DB.exec("SELECT * FROM cities WHERE id = #{id};").first
     name = city.fetch("name")
     id = city.fetch("id").to_i

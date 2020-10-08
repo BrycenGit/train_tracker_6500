@@ -6,6 +6,43 @@ Round Trip Ticket = includes return service for a planned trip. (single trip)
 Brian Harvey <brian.harv3y@gmail.com>
 
 
+get('/') do
+  redirect to('/trains')
+end  
+
+
+get('/trains') do
+  @trains = Train.all
+  redirect to('/trains')
+end  
+
+get('/trains/new') do
+  redirect to('/trains')
+end  
+
+post('/trains') do
+  color = params[:color]
+  train = Train.new({:color => color, :id => nil})
+  train.save()
+  redirect to('/trains')
+end  
+
+get('/trains/:id') do
+  @train = Train.find(params[:id]).to_i())
+  erb(:train)
+end
+
+patch('/trains/:id) do
+  @train = Train.find(params[:id]).to_i())
+  @train.update(params[:color])
+  redirect to('/trains')
+end  
+
+delete('/trains/:id') do
+  @train = Train.find(params[:id]).to_i())
+  @train.delete
+  redirect to('/trains')
+end  
 
   ####################################################################
   {:color => "red"}

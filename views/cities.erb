@@ -1,0 +1,25 @@
+<h1>Train City Tracker</h1>
+<p>We will be your guide to the world</p>
+
+<h4>Here is a list of Cities</h4>
+
+<% if @cities.any? %>
+  <ul>
+  <% @cities.each do |city| %>
+    <li><a href="/cities/<%= city.id %>"><%= city.name %></a></li>
+  <% end %>
+  </ul>
+<% else %>
+  <p>There are currently no cities scheduled.</p>
+<% end %>
+
+<form action="/cities" method="post">
+  <div class="form-group">
+    <label for="name">Enter city name</label>
+    <input id="name" name="name" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn btn-success">Add city</button>
+</form><br>
+
+<a href="/trains" class="btn btn-info">Back to trains</a><br>
+
